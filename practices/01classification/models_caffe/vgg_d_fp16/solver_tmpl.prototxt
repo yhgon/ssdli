@@ -1,0 +1,10 @@
+# From: nvZoo
+net: "REPLACEMODELDIR/train_val_bREPLACEBATCHSIZE.prototxt"
+base_lr: 0.001
+lr_policy: "poly"
+power: 2
+momentum: 0.9
+weight_decay: 0.0005
+display: 20
+max_iter: REPLACEMAXITER
+solver_mode: GPU

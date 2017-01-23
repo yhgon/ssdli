@@ -1,0 +1,10 @@
+net: "REPLACEMODELDIR/train_val_bREPLACEBATCHSIZE.prototxt"
+base_lr: 0.01
+lr_policy: "poly"
+power: 2
+display: 20
+#Imagenet: 1281167 --> 1 epoch = 1281167/batchsize
+max_iter: REPLACEMAXITER
+momentum: 0.9
+weight_decay: 0.0005
+solver_mode: GPU

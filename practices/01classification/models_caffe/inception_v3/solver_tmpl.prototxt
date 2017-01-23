@@ -1,0 +1,12 @@
+# From: https://github.com/smichalowski/google_inception_v3_for_caffe
+net: "REPLACEMODELDIR/train_val_bREPLACEBATCHSIZE.prototxt"
+display: 20
+base_lr: 0.072
+lr_policy: "fixed"
+solver_type: RMSPROP
+rms_decay: 0.9
+delta: 1.0
+gamma: 0.94
+max_iter: REPLACEMAXITER
+weight_decay: 0.0001
+solver_mode: GPU

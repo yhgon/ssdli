@@ -1,0 +1,10 @@
+# From: caffe:models/inception_v1
+net: "REPLACEMODELDIR/train_val_bREPLACEBATCHSIZE.prototxt"
+display: 20
+base_lr: 0.02
+lr_policy: "poly"
+power: 2.
+max_iter: REPLACEMAXITER
+momentum: 0.9
+weight_decay: 0.0002
+solver_mode: GPU
