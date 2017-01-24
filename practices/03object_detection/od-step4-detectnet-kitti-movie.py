@@ -12,9 +12,9 @@ from IPython.display import clear_output
 caffe.set_mode_gpu()
 
 # Set the model job directory from DIGITS here
-MODEL_JOB_DIR='/home/ubuntu/digits/digits/jobs/20160905-143028-2f08'
+MODEL_JOB_DIR='/jobs/20160905-143028-2f08'
 # Set the data job directory from DIGITS here
-DATA_JOB_DIR='/home/ubuntu/digits/digits/jobs/20160905-135347-01d5'
+DATA_JOB_DIR='/jobs/20160905-135347-01d5'
 
 # We need to find the iteration number of the final model snapshot saved by DIGITS
 for root, dirs, files in os.walk(MODEL_JOB_DIR):
@@ -47,7 +47,7 @@ print 'The input size for the network is: (' + \
          ') (batch size, channels, height, width)'
 
 # Create opencv video object
-vid = cv2.VideoCapture('/home/ubuntu/deployment_lab/melbourne.mp4')
+vid = cv2.VideoCapture('/data/melbourne.mp4')
 
 # We will just use every n-th frame from the video
 every_nth = 10
