@@ -48,7 +48,7 @@ classifier.blobs['data'].reshape(NEW_BATCH_SIZE, CHANNELS, HEIGHT, WIDTH)
 classifier.reshape()
 
 # Create opencv video object
-vid = cv2.VideoCapture('/home/ubuntu/deployment_lab/melbourne.mp4')
+vid = cv2.VideoCapture('/data/melbourne.mp4')
 
 counter = 0
 
