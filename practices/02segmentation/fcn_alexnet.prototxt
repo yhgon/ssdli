@@ -1,10 +1,53 @@
+#url from https://github.com/NVIDIA/DIGITS/blob/master/examples/semantic-segmentation/fcn_alexnet.prototxt
+
 # data layers
-input: "data"
-input_shape {
-  dim: 1
-  dim: 3
-  dim: 500
-  dim: 356
+layer {
+  name: "data"
+  type: "Data"
+  top: "data"
+  include {
+    phase: TRAIN
+  }
+  data_param {
+    batch_size: 1
+    backend: LMDB
+  }
+}
+layer {
+  name: "label"
+  type: "Data"
+  top: "label"
+  include {
+    phase: TRAIN
+  }
+  data_param {
+    batch_size: 1
+    backend: LMDB
+  }
+}
+layer {
+  name: "data"
+  type: "Data"
+  top: "data"
+  include {
+    phase: TEST
+  }
+  data_param {
+    batch_size: 1
+    backend: LMDB
+  }
+}
+layer {
+  name: "label"
+  type: "Data"
+  top: "label"
+  include {
+    phase: TEST
+  }
+  data_param {
+    batch_size: 1
+    backend: LMDB
+  }
 }
 # data preprocessing
 layer {
@@ -225,10 +268,10 @@ layer {
   }
 }
 layer {
-  name: "score_fr_21classes"
+  name: "score_fr"
   type: "Convolution"
   bottom: "fc7"
-  top: "score_fr_21classes"
+  top: "score_fr"
   param {
     lr_mult: 1
     decay_mult: 1
@@ -244,10 +287,10 @@ layer {
   }
 }
 layer {
-  name: "upscore_21classes"
+  name: "upscore"
   type: "Deconvolution"
-  bottom: "score_fr_21classes"
-  top: "upscore_21classes"
+  bottom: "score_fr"
+  top: "upscore"
   param {
     lr_mult: 0
   }
@@ -263,11 +306,34 @@ layer {
 layer {
   name: "score"
   type: "Crop"
-  bottom: "upscore_21classes"
+  bottom: "upscore"
   bottom: "data"
   top: "score"
   crop_param {
     axis: 2
     offset: 18
   }
+}
+layer {
+  name: "loss"
+  type: "SoftmaxWithLoss"
+  bottom: "score"
+  bottom: "label"
+  top: "loss"
+  loss_param {
+    ignore_label: 255
+    normalize: true
+  }
+  exclude {
+    stage: "deploy"
+  }
+}
+layer {
+  name: "accuracy"
+  type: "Accuracy"
+  bottom: "score"
+  bottom: "label"
+  top: "accuracy"
+  include { stage: "val" }
+  accuracy_param { ignore_label: 255 }
 }
