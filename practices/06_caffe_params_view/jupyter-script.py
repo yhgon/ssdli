@@ -8,8 +8,11 @@ plt.rcParams['image.cmap'] = 'gray'  # use grayscale output rather than a  color
 
 import caffe
 
-param_root = './'
-caffe_root ='/home/ubuntu/caffe/'
+param_root = './' # for parameters in .caffemodel
+model_root = './' # for model define deploy.prototxt
+data_root = './'  # for mean file
+caffe_root ='/opt/caffe/' # for caffe utility
+
 import os
 if os.path.isfile(param_root + 'bvlc_reference_caffenet.caffemodel'):
     print 'CaffeNet found.'
@@ -22,13 +25,13 @@ else:
 
 !wget http://dl.caffe.berkeleyvision.org/bvlc_reference_caffenet.caffemodel
 !wget https://raw.githubusercontent.com/BVLC/caffe/master/models/bvlc_reference_caffenet/deploy.prototxt
-!wget https://raw.githubusercontent.com/BVLC/caffe/master/models/bvlc_reference_caffenet/deploy.prototxt
+!wget https://github.com/BVLC/caffe/blob/master/python/caffe/imagenet/ilsvrc_2012_mean.npy
 
 caffe.set_mode_gpu() 
 
 
-model_def = param_root + 'deploy.prototxt.1'
-model_weights = param_root + 'bvlc_reference_caffenet.caffemodel'
+model_def = param_root + 'deploy.prototxt'
+model_weights = param_root + 'bvlc_reference_caffenet.caffemodel' # parameters
 net = caffe.Net(model_def,      # defines the structure of the model
                 model_weights,  # contains the trained weights
                 caffe.TEST)     # use test mode (e.g., don't perform dropout)
@@ -55,13 +58,12 @@ net.blobs['data'].reshape(50,        # batch size
 
 
 
-!ls /home/ubuntu/caffe/examples/images/
+!ls /opt/caffe/images/ # cat sample file
 
 
 image = caffe.io.load_image(caffe_root + 'examples/images/cat.jpg')
 transformed_image = transformer.preprocess('data', image)
-plt.imshow(image)
-
+plt.imshow(image)  # if jupyter error, plz check %matplotlib inline option in plt
 
 
 ################################################################################################
